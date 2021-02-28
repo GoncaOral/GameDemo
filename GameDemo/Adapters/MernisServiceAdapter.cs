@@ -11,8 +11,11 @@ namespace GameDemo.Adapters
     {
         public bool ChechkIfRealUser(User user)
         {
-            KPSPublicSoapClient client = new KPSPublicSoapClient();
-            return client.TCKimlikNoDogrula(user.NationalityId, user.FirstName.ToUpper(), user.LastName.ToUpper(), user.DateOfBirth.Year);
+            //KPSPublicSoapClient client = new KPSPublicSoapClient();
+            //return client.TCKimlikNoDogrula(user.NationalityId, user.FirstName.ToUpper(), user.LastName.ToUpper(), user.DateOfBirth.Year);
+            KPSPublicSoapClient client = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
+            var result = client.TCKimlikNoDogrulaAsync(user.NationalityId, user.FirstName.ToUpper(), user.LastName.ToUpper(), user.DateOfBirth.Year).Result;
+            return result.Body.TCKimlikNoDogrulaResult;
         }
     }
 }
